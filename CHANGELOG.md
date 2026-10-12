@@ -2,6 +2,24 @@
 
 All notable changes to this project are documented in this file.
 
+## 3.2.1 - 2026-10-12
+
+### Fixed
+
+- Activation on SAP_BASIS 752: an inline `FIELD-SYMBOL( )` declared by
+  `ASSIGN COMPONENT ... OF STRUCTURE <generic>` is typed as generic ANY
+  there, so the subsequent `LOOP AT` failed with
+  `"<SKILLS>" is not an internal table` (newer releases like
+  SAP_BASIS 816 accept it). Affected spots now declare the field
+  symbol explicitly as `TYPE ANY TABLE` (runtime behavior unchanged,
+  the generated tables are standard tables):
+  - `ZDYNAMIC_DATA_DEMO` (`usage_create_data` loop over `SKILLS`),
+  - the unit tests `create_data_fills_values` and
+    `create_data_array_root` (the class itself would have failed
+    752 activation the same way).
+- No change to the library itself - the filler/serializer already
+  pass generic tables through `TYPE STANDARD TABLE` parameters.
+
 ## 3.2.0 - 2026-09-29
 
 ### Added

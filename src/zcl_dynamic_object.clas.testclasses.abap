@@ -527,7 +527,8 @@ CLASS ltcl_dynamic_type IMPLEMENTATION.
     cl_abap_unit_assert=>assert_subrc( ).
     cl_abap_unit_assert=>assert_equals( exp = 'hi' act = <hello> ).
 
-    ASSIGN COMPONENT 'SKILLS' OF STRUCTURE <wa> TO FIELD-SYMBOL(<skills>).
+    FIELD-SYMBOLS <skills> TYPE ANY TABLE.
+    ASSIGN COMPONENT 'SKILLS' OF STRUCTURE <wa> TO <skills>.
     cl_abap_unit_assert=>assert_subrc( ).
     cl_abap_unit_assert=>assert_equals( exp = 1 act = lines( <skills> ) ).
 
@@ -585,7 +586,8 @@ CLASS ltcl_dynamic_type IMPLEMENTATION.
       json    = `[10, 20]`
       infer_types = abap_true ).
 
-    ASSIGN lr_data->* TO FIELD-SYMBOL(<table>).
+    FIELD-SYMBOLS <table> TYPE ANY TABLE.
+    ASSIGN lr_data->* TO <table>.
     cl_abap_unit_assert=>assert_equals( exp = 2 act = lines( <table> ) ).
 
     DATA(lv_index) = 1.

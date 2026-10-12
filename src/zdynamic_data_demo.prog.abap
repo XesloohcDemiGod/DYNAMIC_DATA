@@ -132,12 +132,17 @@ CLASS lcl_demo IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+    " explicit table typing: on SAP_BASIS 752 an inline FIELD-SYMBOL( )
+    " from ASSIGN COMPONENT over a generic structure is typed ANY and
+    " cannot be used in LOOP AT
+    FIELD-SYMBOLS <skills> TYPE ANY TABLE.
+
     ASSIGN lr_data->* TO FIELD-SYMBOL(<wa>).
 
     ASSIGN COMPONENT 'HELLO' OF STRUCTURE <wa> TO FIELD-SYMBOL(<hello>).
     ASSIGN COMPONENT 'AUTHOR' OF STRUCTURE <wa> TO FIELD-SYMBOL(<author>).
     ASSIGN COMPONENT 'NAME' OF STRUCTURE <author> TO FIELD-SYMBOL(<author_name>).
-    ASSIGN COMPONENT 'SKILLS' OF STRUCTURE <wa> TO FIELD-SYMBOL(<skills>).
+    ASSIGN COMPONENT 'SKILLS' OF STRUCTURE <wa> TO <skills>.
 
     WRITE: / 'HELLO       =', <hello>.
     WRITE: / 'AUTHOR-NAME =', <author_name>.
